@@ -11,13 +11,16 @@ fn main() {
         let options = spirv_tools_sys::spvOptimizerOptionsCreate();
         let data = std::fs::read(path_in).unwrap();
         let mut optimized = null_mut();
-        spirv_tools_sys::spvOptimizerRun(
+        if spirv_tools_sys::spvOptimizerRun(
             optim,
             data.as_ptr() as *const u32,
             data.len() / 4,
             &mut optimized,
             options,
-        );
+        ) < 0
+        {
+            panic!("Optimization error");
+        }
         let optimized = &mut *optimized;
         std::fs::write(
             path_out,
