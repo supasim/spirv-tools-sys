@@ -1,5 +1,5 @@
 [package]
-name = "spirv-opt-cli"
+name = "spirv-tools-cli"
 version = "0.1.0"
 edition = "2024"
 
