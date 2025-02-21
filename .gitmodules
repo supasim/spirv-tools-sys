@@ -1,0 +1,3 @@
+[submodule "spirv-opt-sys/src/raw"]
+	path = spirv-opt-sys/src/raw
+	url = https://github.com/KhronosGroup/SPIRV-Tools.git
