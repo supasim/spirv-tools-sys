@@ -1,10 +1,12 @@
 use std::{env, path::PathBuf};
 
 fn main() {
+    println!("cargo:rerun-if-env-changed=SPIRV_TOOLS_DIR");
     let dir = env::var("SPIRV_TOOLS_DIR").expect("SPIRV_TOOLS_DIR must be set");
-    println!("cargo:rustc-link-search={}/lib", dir);
+    println!("cargo:rustc-link-search=native={dir}/lib");
     println!("cargo:rustc-link-lib=SPIRV-Tools-opt");
     println!("cargo:rustc-link-lib=SPIRV-Tools");
+    println!("cargo:rustc-link-lib=stdc++");
     let bindings = bindgen::Builder::default()
         // This is recommended I think?
         .clang_arg("std=c++14")
