@@ -15,7 +15,7 @@ fn main() {
         format!("{dir}/include/spirv-tools")
     } else {
         panic!(
-            "The environment variable SPIRV_TOOLS_HEADER_DIR, SPIRV_TOOLS_DIR, or VULKAN_SDK must be set"
+            "The environment variable SPIRV_TOOLS_HEADERS_DIR, SPIRV_TOOLS_DIR, or VULKAN_SDK must be set"
         );
     };
     println!("{headers_dir}");
