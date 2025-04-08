@@ -10,9 +10,23 @@ fn main() {
     let headers_dir = if let Ok(dir) = env::var("SPIRV_TOOLS_HEADERS_DIR") {
         dir
     } else if let Ok(dir) = env::var("SPIRV_TOOLS_DIR") {
-        format!("{dir}/include")
+        #[cfg(target_os = "windows")]
+        {
+            format!("{dir}/Include")
+        }
+        #[cfg(not(target_os = "windows"))]
+        {
+            format!("{dir}/include")
+        }
     } else if let Ok(dir) = env::var("VULKAN_SDK") {
-        format!("{dir}/include/spirv-tools")
+        #[cfg(target_os = "windows")]
+        {
+            format!("{dir}/Include/spirv-tools")
+        }
+        #[cfg(not(target_os = "windows"))]
+        {
+            format!("{dir}/include/spirv-tools")
+        }
     } else {
         panic!(
             "The environment variable SPIRV_TOOLS_HEADERS_DIR, SPIRV_TOOLS_DIR, or VULKAN_SDK must be set"
@@ -22,9 +36,23 @@ fn main() {
     let libs_dir = if let Ok(dir) = env::var("SPIRV_TOOLS_LIBS_DIR") {
         dir
     } else if let Ok(dir) = env::var("SPIRV_TOOLS_DIR") {
-        format!("{dir}/lib")
+        #[cfg(target_os = "windows")]
+        {
+            format!("{dir}/Lib")
+        }
+        #[cfg(not(target_os = "windows"))]
+        {
+            format!("{dir}/lib")
+        }
     } else if let Ok(dir) = env::var("VULKAN_SDK") {
-        format!("{dir}/lib")
+        #[cfg(target_os = "windows")]
+        {
+            format!("{dir}/Lib")
+        }
+        #[cfg(not(target_os = "windows"))]
+        {
+            format!("{dir}/lib")
+        }
     } else {
         panic!(
             "The environment variable SPIRV_TOOLS_LIBS_DIR, SPIRV_TOOLS_DIR, or VULKAN_SDK must be set"
