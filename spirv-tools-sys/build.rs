@@ -1,4 +1,3 @@
-use core::panic;
 use std::{env, path::PathBuf};
 
 fn main() {

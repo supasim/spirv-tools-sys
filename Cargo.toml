@@ -1,5 +1,4 @@
 [workspace]
-edition = "2024"
 resolver = "3"
 members = ["spirv-tools-cli", "spirv-tools-sys"]
 default-members = ["spirv-tools-cli"]
