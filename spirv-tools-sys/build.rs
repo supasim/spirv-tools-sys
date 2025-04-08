@@ -1,9 +1,38 @@
+use core::panic;
 use std::{env, path::PathBuf};
 
 fn main() {
-    println!("cargo:rerun-if-env-changed=SPIRV_TOOLS_DIR");
-    let dir = env::var("SPIRV_TOOLS_DIR").expect("SPIRV_TOOLS_DIR must be set");
-    println!("cargo:rustc-link-search=native={dir}/lib");
+    println!("cargo:rerun-if-env-changed=VULKAN_SDK");
+    println!("cargo:rerun-if-env-changed=SPIRV_TOOLS");
+    println!("cargo:rerun-if-env-changed=SPIRV_TOOLS_LIBS_DIR");
+    println!("cargo:rerun-if-env-changed=SPIRV_TOOLS_HEADERS_DIR");
+
+    let headers_dir = if let Ok(dir) = env::var("SPIRV_TOOLS_HEADERS_DIR") {
+        dir
+    } else if let Ok(dir) = env::var("SPIRV_TOOLS_DIR") {
+        format!("{dir}/include")
+    } else if let Ok(dir) = env::var("VULKAN_SDK") {
+        format!("{dir}/include/spirv-tools")
+    } else {
+        panic!(
+            "The environment variable SPIRV_TOOLS_HEADER_DIR, SPIRV_TOOLS_DIR, or VULKAN_SDK must be set"
+        );
+    };
+    println!("{headers_dir}");
+    let libs_dir = if let Ok(dir) = env::var("SPIRV_TOOLS_LIBS_DIR") {
+        dir
+    } else if let Ok(dir) = env::var("SPIRV_TOOLS_DIR") {
+        format!("{dir}/lib")
+    } else if let Ok(dir) = env::var("VULKAN_SDK") {
+        format!("{dir}/lib")
+    } else {
+        panic!(
+            "The environment variable SPIRV_TOOLS_LIBS_DIR, SPIRV_TOOLS_DIR, or VULKAN_SDK must be set"
+        );
+    };
+    if !libs_dir.is_empty() {
+        println!("cargo:rustc-link-search=native={libs_dir}");
+    }
     println!("cargo:rustc-link-lib=SPIRV-Tools-opt");
     println!("cargo:rustc-link-lib=SPIRV-Tools");
     println!("cargo:rustc-link-lib=stdc++");
@@ -12,7 +41,7 @@ fn main() {
         .clang_arg("std=c++14")
         // The input header we would like to generate
         // bindings for.
-        .headers([format!("{dir}/include/spirv-tools/libspirv.h")])
+        .headers([format!("{headers_dir}/libspirv.h")])
         // Tell cargo to invalidate the built crate whenever any of the
         // included header files changed.
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
