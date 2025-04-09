@@ -62,6 +62,7 @@ fn main() {
     }
     println!("cargo:rustc-link-lib=SPIRV-Tools-opt");
     println!("cargo:rustc-link-lib=SPIRV-Tools");
+    #[cfg(not(target_env = "msvc"))]
     println!("cargo:rustc-link-lib=stdc++");
     let bindings = bindgen::Builder::default()
         // This is recommended I think?
