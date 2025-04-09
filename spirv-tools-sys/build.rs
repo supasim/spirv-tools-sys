@@ -62,8 +62,10 @@ fn main() {
     }
     println!("cargo:rustc-link-lib=SPIRV-Tools-opt");
     println!("cargo:rustc-link-lib=SPIRV-Tools");
-    #[cfg(not(target_env = "msvc"))]
+    #[cfg(target_env = "gnu")]
     println!("cargo:rustc-link-lib=stdc++");
+    #[cfg(target_vendor = "apple")]
+    println!("cargo:rustc-link-lib=c++");
     let bindings = bindgen::Builder::default()
         // This is recommended I think?
         .clang_arg("std=c++14")
