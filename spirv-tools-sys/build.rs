@@ -58,7 +58,7 @@ fn main() {
         );
     };
     if !libs_dir.is_empty() {
-        println!("cargo:rustc-link-search=native={libs_dir}");
+        println!("cargo:rustc-link-search={libs_dir}");
     }
     println!("cargo:rustc-link-lib=SPIRV-Tools-opt");
     println!("cargo:rustc-link-lib=SPIRV-Tools");
