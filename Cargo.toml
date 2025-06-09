@@ -1,5 +1,5 @@
 [package]
-name = "spirv-tools-sys"
+name = "supasim-spirv-tools-sys"
 version = "0.0.1"
 edition = "2024"
 resolver = "3"
