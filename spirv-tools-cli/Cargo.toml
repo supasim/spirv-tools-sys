@@ -1,8 +1,0 @@
-[package]
-name = "spirv-tools-cli"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]
-spirv-tools-sys = { path = "../spirv-tools-sys" }
-libc = "0.2"

@@ -1,4 +1,15 @@
-[workspace]
+[package]
+name = "spirv-tools-sys"
+version = "0.0.1"
+edition = "2024"
 resolver = "3"
-members = ["spirv-tools-cli", "spirv-tools-sys"]
-default-members = ["spirv-tools-cli"]
+description = "Very simple SpirV-tools bindings as used by supasim. No other utilities or helpers are provided."
+license = "MIT"
+repository = "https://github.com/supasim/spirv-tools-sys"
+readme = "README.md"
+homepage = "https://supasim.github.io/"
+
+[dependencies]
+
+[build-dependencies]
+bindgen = "0.72"
