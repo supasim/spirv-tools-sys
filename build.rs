@@ -67,8 +67,10 @@ fn main() {
     #[cfg(target_vendor = "apple")]
     println!("cargo:rustc-link-lib=c++");
     let bindings = bindgen::Builder::default()
-        // This is recommended I think?
-        .clang_arg("std=c++14")
+        // This is required for properly parsing some macOS headers apparently
+        .clang_arg("-xc++")
+        // Internals use c++17 interface
+        .clang_arg("-std=c++17")
         // The input header we would like to generate
         // bindings for.
         .headers([format!("{headers_dir}/libspirv.h")])
